@@ -1,6 +1,50 @@
 import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
 const CourseGridView = () => {
+const posts = [
+  {
+    id: 1,
+    instructor: {
+      name: "John Doe",
+      role: "Senior Developer, Google",
+      profilePicture: "assets/images/thumbs/course-img2.png",
+    },
+    post: {
+      image: "assets/images/thumbs/post-img1.png",
+      title: "Roadmap to Becoming a Full-Stack Developer",
+      description: "Discover the essential steps and resources that helped me master full-stack development and land my dream job.",
+      time: "2 hours ago",
+    },
+    likes: 1500,
+    isLiked: false,
+  },
+  {
+    id: 2,
+    instructor: {
+      name: "Jane Smith",
+      role: "Data Scientist, Meta",
+      profilePicture: "assets/images/thumbs/course-img3.png",
+    },
+    post: {
+      image: "assets/images/thumbs/post-img2.png",
+      title: "Mastering Data Structures and Algorithms",
+      description: "The strategies and tools that helped me excel in competitive coding and crack tech interviews.",
+      time: "1 day ago",
+    },
+    likes: 2300,
+    isLiked: false,
+  },
+];
+const [postList, setPostList] = useState(posts);
+  const handleLike = (id) => {
+    setPostList((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === id
+          ? { ...post, likes: post.isLiked ? post.likes - 1 : post.likes + 1, isLiked: !post.isLiked }
+          : post
+      )
+    );
+  };
   return (
     <section className='course-grid-view py-120'>
       <div className='container'>
@@ -16,92 +60,62 @@ const CourseGridView = () => {
           </div>
         </div>
         <div className='row gy-4'>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img1.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Introduction to Digital Marketing
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img1.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        AnikaZ
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$148</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
+
+
+          <div className="container">
+      {postList.map((post) => (
+        <div className="col-lg-4 col-sm-6" style={{ width: "600px", margin: "0 auto" }} key={post.id}>
+          <div className="post-card bg-white rounded-16 p-12 shadow-md border border-neutral-30">
+            {/* Instructor Information */}
+            <div className="flex-between mb-16">
+              <div className="flex-align gap-12">
+                <img
+                  src={post.instructor.profilePicture}
+                  alt="Instructor"
+                  className="w-48 h-48 object-fit-cover rounded-circle"
+                />
+                <div>
+                  <h5 className="text-md font-semibold">{post.instructor.name}</h5>
+                  <p className="text-sm text-neutral-600">{post.instructor.role}</p>
                 </div>
               </div>
+              <p className="text-sm text-neutral-500">{post.post.time}</p>
+            </div>
+
+            {/* Post Content */}
+            <div className="post-content mb-16">
+              <img
+                src={post.post.image}
+                alt="Post Thumbnail"
+                className="w-full rounded-12 mb-12"
+                style={{ height: "auto" }}
+              />
+              <h4 className="text-lg font-semibold mb-8">{post.post.title}</h4>
+              <p className="text-sm text-neutral-700">{post.post.description}</p>
+            </div>
+
+            {/* Post Footer */}
+            <div className="post-footer flex-between mt-12">
+              <button
+                type="button"
+                className="flex-align gap-4 text-main-600 text-lg"
+                onClick={() => handleLike(post.id)}
+              >
+                <i
+                  className={`ph ${post.isLiked ? "ph-thumbs-up-fill" : "ph-thumbs-up"}`}
+                  style={{
+                    color: post.isLiked ? "#007BFF" : "#888888",
+                    fontSize: "24px",
+                  }}
+                ></i>
+                {post.likes} Likes
+              </button>
             </div>
           </div>
+        </div>
+      ))}
+    </div>
+
           <div className='col-lg-4 col-sm-6'>
             <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
               <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
