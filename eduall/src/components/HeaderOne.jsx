@@ -74,7 +74,7 @@ const HeaderOne = () => {
       ],
     },
     {
-      label: "Courses",
+      label: "Posts",
       links: [
         { to: "/course", label: "Course Grid View" },
         { to: "/course-list-view", label: "Course List View" },
@@ -83,7 +83,7 @@ const HeaderOne = () => {
       ],
     },
     {
-      label: "Pages",
+      label: "Events",
       links: [
         { to: "/about", label: "About" },
         { to: "/about-two", label: "About Two" },
@@ -113,7 +113,7 @@ const HeaderOne = () => {
     },
 
     {
-      label: "Blog",
+      label: "FAQ",
       links: [
         { to: "/blog", label: "Blog Grid" },
         { to: "/blog-list", label: "Blog List" },
@@ -121,7 +121,7 @@ const HeaderOne = () => {
         { to: "/blog-details", label: "Blog Details" },
       ],
     },
-    { to: "/contact", label: "Contact" },
+    { to: "/contact", label: "About Us" },
   ];
 
   return (
