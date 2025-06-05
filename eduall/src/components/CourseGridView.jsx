@@ -1,863 +1,176 @@
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 const CourseGridView = () => {
-const posts = [
-  {
-    id: 1,
-    instructor: {
-      name: "John Doe",
-      role: "Senior Developer, Google",
-      profilePicture: "assets/images/thumbs/course-img2.png",
+  const posts = [
+    {
+      id: 1,
+      instructor: {
+        name: "John Doe",
+        role: "Senior Developer, Google",
+        profilePicture: "assets/images/thumbs/course-img2.png",
+      },
+      post: {
+        image: "assets/images/thumbs/course-img2.png",
+        title: "Roadmap to Becoming a Full-Stack Developer",
+        description:
+          "Discover the essential steps and resources that helped me master full-stack development and land my dream job.",
+        time: "2 hours ago",
+      },
+      likes: 0,
+      isLiked: false,
     },
-    post: {
-      image: "assets/images/thumbs/post-img1.png",
-      title: "Roadmap to Becoming a Full-Stack Developer",
-      description: "Discover the essential steps and resources that helped me master full-stack development and land my dream job.",
-      time: "2 hours ago",
+    {
+      id: 2,
+      instructor: {
+        name: "Jane Smith",
+        role: "Data Scientist, Meta",
+        profilePicture: "assets/images/thumbs/course-img2.png",
+      },
+      post: {
+        image: "assets/images/thumbs/course-img2.png",
+        title: "Mastering Data Structures and Algorithms",
+        description:
+          "The strategies and tools that helped me excel in competitive coding and crack tech interviews.",
+        time: "1 day ago",
+      },
+      likes: 0,
+      isLiked: false,
     },
-    likes: 1500,
-    isLiked: false,
-  },
-  {
-    id: 2,
-    instructor: {
-      name: "Jane Smith",
-      role: "Data Scientist, Meta",
-      profilePicture: "assets/images/thumbs/course-img3.png",
+     {
+      id: 1,
+      instructor: {
+        name: "John Doe",
+        role: "Senior Developer, Google",
+        profilePicture: "assets/images/thumbs/course-img2.png",
+      },
+      post: {
+        image: "assets/images/thumbs/course-img2.png",
+        title: "Roadmap to Becoming a Full-Stack Developer",
+        description:
+          "Discover the essential steps and resources that helped me master full-stack development and land my dream job.",
+        time: "2 hours ago",
+      },
+      likes: 0,
+      isLiked: false,
     },
-    post: {
-      image: "assets/images/thumbs/post-img2.png",
-      title: "Mastering Data Structures and Algorithms",
-      description: "The strategies and tools that helped me excel in competitive coding and crack tech interviews.",
-      time: "1 day ago",
+    {
+      id: 2,
+      instructor: {
+        name: "Jane Smith",
+        role: "Data Scientist, Meta",
+        profilePicture: "assets/images/thumbs/course-img2.png",
+      },
+      post: {
+        image: "assets/images/thumbs/course-img2.png",
+        title: "Mastering Data Structures and Algorithms",
+        description:
+          "The strategies and tools that helped me excel in competitive coding and crack tech interviews.",
+        time: "1 day ago",
+      },
+      likes:0,
+      isLiked: false,
     },
-    likes: 2300,
-    isLiked: false,
-  },
-];
-const [postList, setPostList] = useState(posts);
+  ];
+
+  const [postList, setPostList] = useState(posts);
+
   const handleLike = (id) => {
     setPostList((prevPosts) =>
       prevPosts.map((post) =>
         post.id === id
-          ? { ...post, likes: post.isLiked ? post.likes - 1 : post.likes + 1, isLiked: !post.isLiked }
+          ? {
+              ...post,
+              likes: post.isLiked ? post.likes - 1 : post.likes + 1,
+              isLiked: !post.isLiked,
+            }
           : post
       )
     );
   };
+
   return (
-    <section className='course-grid-view py-120'>
-      <div className='container'>
-        <div className='flex-between gap-16 flex-wrap mb-40'>
-          <span className='text-neutral-500'>Showing 9 of 600 Results </span>
-          <div className='flex-align gap-8'>
-            <span className='text-neutral-500 flex-shrink-0'>Sort By :</span>
-            <select className='form-select ps-20 pe-28 py-8 fw-semibold rounded-pill bg-main-25 border border-neutral-30 text-neutral-700'>
-              <option value={1}>Newest</option>
-              <option value={1}>Trending</option>
-              <option value={1}>Popular</option>
-            </select>
-          </div>
+    <section className="course-grid-view py-120">
+      <div className="container">
+        <div className="flex-between gap-16 flex-wrap mb-40">
+          <span className="text-neutral-500">Showing {postList.length} Results</span>
         </div>
-        <div className='row gy-4'>
-
-
-          <div className="container">
-      {postList.map((post) => (
-        <div className="col-lg-4 col-sm-6" style={{ width: "600px", margin: "0 auto" }} key={post.id}>
-          <div className="post-card bg-white rounded-16 p-12 shadow-md border border-neutral-30">
-            {/* Instructor Information */}
-            <div className="flex-between mb-16">
-              <div className="flex-align gap-12">
-                <img
-                  src={post.instructor.profilePicture}
-                  alt="Instructor"
-                  className="w-48 h-48 object-fit-cover rounded-circle"
-                />
-                <div>
-                  <h5 className="text-md font-semibold">{post.instructor.name}</h5>
-                  <p className="text-sm text-neutral-600">{post.instructor.role}</p>
-                </div>
-              </div>
-              <p className="text-sm text-neutral-500">{post.post.time}</p>
-            </div>
-
-            {/* Post Content */}
-            <div className="post-content mb-16">
-              <img
-                src={post.post.image}
-                alt="Post Thumbnail"
-                className="w-full rounded-12 mb-12"
-                style={{ height: "auto" }}
-              />
-              <h4 className="text-lg font-semibold mb-8">{post.post.title}</h4>
-              <p className="text-sm text-neutral-700">{post.post.description}</p>
-            </div>
-
-            {/* Post Footer */}
-            <div className="post-footer flex-between mt-12">
-              <button
-                type="button"
-                className="flex-align gap-4 text-main-600 text-lg"
-                onClick={() => handleLike(post.id)}
+        <div className="row gy-4">
+          {postList.map((post) => (
+            <div className="w-100 mb-4" key={post.id}>
+              <div
+                className="post-card rounded-16 p-12 shadow-md border border-neutral-30"
+                style={{
+                  backgroundColor: "#F3F9FF",
+                  width: "900px",
+                  margin: "0 auto",
+                  padding: "24px",
+                }}
               >
-                <i
-                  className={`ph ${post.isLiked ? "ph-thumbs-up-fill" : "ph-thumbs-up"}`}
-                  style={{
-                    color: post.isLiked ? "#007BFF" : "#888888",
-                    fontSize: "24px",
-                  }}
-                ></i>
-                {post.likes} Likes
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+                {/* Instructor Information */}
+                <div className="flex-between mb-16">
+                  <div className="flex-align gap-12">
+                    <img
+                      src={post.instructor.profilePicture}
+                      alt="Instructor"
+                      className="w-48 h-48 object-fit-cover rounded-circle"
+                    />
+                    <div>
+  <h5
+    className="text-md font-semibold"
+    style={{
+      fontWeight: "bold",
+      marginBottom: "4px", // Adjust spacing between lines
+    }}
+  >
+    {post.instructor.name}
+  </h5>
+  <p
+    className="text-sm text-neutral-600"
+    style={{
+      fontWeight: "normal",
+      color: "#888888", // Lighter shade for role
+    }}
+  >
+    {post.instructor.role}
+  </p>
+</div>
+                  </div>
+                  <p className="text-sm text-neutral-500">{post.post.time}</p>
+                </div>
 
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
+                {/* Post Content */}
+                <div className="post-content mb-16">
                   <img
-                    src='assets/images/thumbs/course-img2.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
+                    src={post.post.image}
+                    alt="Post Thumbnail"
+                    className="w-full rounded-12 mb-12"
                   />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>25h 06m</span>
+                  <h4 className="text-lg font-semibold mb-8">{post.post.title}</h4>
+                  <p className="text-sm text-neutral-700">{post.post.description}</p>
                 </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Introduction to Python Programming
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img2.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Wade
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$499</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
+
+                {/* Post Footer */}
+                <div className="post-footer flex-between mt-12">
+                  <button
+                    type="button"
+                    className="flex-align gap-4 text-main-600 text-lg"
+                    onClick={() => handleLike(post.id)}
+                    style={{ display: "flex", alignItems: "center", gap: "8px" }}
                   >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
+                    {post.isLiked ? (
+                      <LikeFilled style={{ color: "#007BFF", fontSize: "24px" }} />
+                    ) : (
+                      <LikeOutlined style={{ color: "#888888", fontSize: "24px" }} />
+                    )}
+                    {post.likes} Likes
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img3.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Introduction to Photography Masterclass
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img3.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Cody
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$457</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img4.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Spanish Language Mastery: Beginner to Fluent
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img4.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Dustin
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$148</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img5.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Financial Planning for Millennials
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img5.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Bruce
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$546</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img6.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Nutrition Essentials for Healthy Living
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img6.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Robert
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$345</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img7.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Nutrition Essentials for Healthy Living
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img2.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Robert
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$345</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img9.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Nutrition Essentials for Healthy Living
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img3.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Robert
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$345</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-lg-4 col-sm-6'>
-            <div className='course-item bg-main-25 rounded-16 p-12 h-100 border border-neutral-30'>
-              <div className='course-item__thumb rounded-12 overflow-hidden position-relative'>
-                <Link to='/course-details' className='w-100 h-100'>
-                  <img
-                    src='assets/images/thumbs/course-img8.png'
-                    alt='Course'
-                    className='course-item__img rounded-12 cover-img transition-2'
-                  />
-                </Link>
-                <div className='flex-align gap-8 bg-main-600 rounded-pill px-24 py-12 text-white position-absolute inset-block-start-0 inset-inline-start-0 mt-20 ms-20 z-1'>
-                  <span className='text-2xl d-flex'>
-                    <i className='ph ph-clock' />
-                  </span>
-                  <span className='text-lg fw-medium'>9h 36m</span>
-                </div>
-                <button
-                  type='button'
-                  className='wishlist-btn w-48 h-48 bg-white text-main-two-600 flex-center position-absolute inset-block-start-0 inset-inline-end-0 mt-20 me-20 z-1 text-2xl rounded-circle transition-2'
-                >
-                  <i className='ph ph-heart' />
-                </button>
-              </div>
-              <div className='course-item__content'>
-                <div className=''>
-                  <h4 className='mb-28'>
-                    <Link to='/course-details' className='link text-line-2'>
-                      Nutrition Essentials for Healthy Living
-                    </Link>
-                  </h4>
-                  <div className='flex-between gap-8 flex-wrap mb-16'>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-video-camera' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        20 Lessons
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <i className='ph-bold ph-chart-bar' />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Beginner
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex-between gap-8 flex-wrap'>
-                    <div className='flex-align gap-4'>
-                      <span className='text-2xl fw-medium text-warning-600 d-flex'>
-                        <i className='ph-fill ph-star' />
-                      </span>
-                      <span className='text-lg text-neutral-700'>
-                        4.7
-                        <span className='text-neutral-100'>(6.4k)</span>
-                      </span>
-                    </div>
-                    <div className='flex-align gap-8'>
-                      <span className='text-neutral-700 text-2xl d-flex'>
-                        <img
-                          src='assets/images/thumbs/user-img1.png'
-                          alt='User '
-                          className='w-32 h-32 object-fit-cover rounded-circle'
-                        />
-                      </span>
-                      <span className='text-neutral-700 text-lg fw-medium'>
-                        Robert
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex-between gap-8 pt-24 border-top border-neutral-50 mt-28 border-dashed border-0'>
-                  <h4 className='mb-0 text-main-two-600'>$345</h4>
-                  <Link
-                    to='/apply-admission'
-                    className='flex-align gap-8 text-main-600 hover-text-decoration-underline transition-1 fw-semibold'
-                    tabIndex={0}
-                  >
-                    Enroll Now
-                    <i className='ph ph-arrow-right' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-        <ul className='pagination mt-40 flex-align gap-12 flex-wrap justify-content-center'>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              <i className='ph-bold ph-caret-left' />
-            </Link>
-          </li>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              1
-            </Link>
-          </li>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              2
-            </Link>
-          </li>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              3
-            </Link>
-          </li>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              ...
-            </Link>
-          </li>
-          <li className='page-item'>
-            <Link
-              className='page-link text-neutral-700 fw-semibold w-40 h-40 bg-main-25 rounded-circle hover-bg-main-600 border-neutral-30 hover-border-main-600 hover-text-white flex-center p-0'
-              to='#'
-            >
-              <i className='ph-bold ph-caret-right' />
-            </Link>
-          </li>
-        </ul>
       </div>
     </section>
   );
 };
-
 export default CourseGridView;
