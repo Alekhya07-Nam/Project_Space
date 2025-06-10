@@ -383,39 +383,226 @@
 // export default ContactInner;
 
 
+// import React, { useState } from "react";
+
+// const ContactInner = () => {
+//   const [post, setPost] = useState({
+//     name: "",
+//     role: "",
+//     title: "",
+//     description: "",
+//     time: "",
+//   });
+//   const [profilePicture, setProfilePicture] = useState(null);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setPost((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleFileChange = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       setProfilePicture(file);
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const currentTime = new Date().toLocaleString();
+//     const formData = new FormData();
+
+//     // Append form fields
+//     formData.append("name", post.name);
+//     formData.append("role", post.role);
+//     formData.append("title", post.title);
+//     formData.append("description", post.description);
+//     formData.append("time", currentTime);
+//     if (profilePicture) {
+//       formData.append("profilePicture", profilePicture);
+//     }
+
+//     try {
+//       const response = await fetch("http://localhost:5000/api/posts", {
+//         method: "POST",
+//         body: formData,
+//       });
+
+//       if (!response.ok) {
+//         throw new Error("Failed to save post");
+//       }
+
+//       const data = await response.json();
+//       console.log("Post saved to backend:", data);
+
+//       // Clear the form
+//       setPost({
+//         name: "",
+//         role: "",
+//         title: "",
+//         description: "",
+//         time: "",
+//       });
+//       setProfilePicture(null);
+//     } catch (error) {
+//       console.error("Error saving post:", error);
+//       alert("Failed to save post. Please try again.");
+//     }
+//   };
+
+//   return (
+//     <div style={styles.container}>
+//       <h2 style={styles.heading}>Create a Post</h2>
+//       <form onSubmit={handleSubmit} style={styles.form}>
+//         <input
+//           type="text"
+//           name="name"
+//           value={post.name}
+//           onChange={handleChange}
+//           placeholder="Instructor Name"
+//           required
+//           style={styles.input}
+//         />
+//         <input
+//           type="text"
+//           name="role"
+//           value={post.role}
+//           onChange={handleChange}
+//           placeholder="Role"
+//           required
+//           style={styles.input}
+//         />
+//         <input
+//           type="file"
+//           accept="image/*"
+//           onChange={handleFileChange}
+//           style={styles.fileInput}
+//         />
+//         <input
+//           type="text"
+//           name="title"
+//           value={post.title}
+//           onChange={handleChange}
+//           placeholder="Post Title"
+//           required
+//           style={styles.input}
+//         />
+//         <textarea
+//           name="description"
+//           value={post.description}
+//           onChange={handleChange}
+//           placeholder="Post Description"
+//           required
+//           style={styles.textarea}
+//         ></textarea>
+//         <button type="submit" style={styles.button}>
+//           Add Post
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// // Inline styles
+// const styles = {
+//   container: {
+//     maxWidth: "600px",
+//     margin: "0 auto",
+//     padding: "20px",
+//     border: "1px solid #ddd",
+//     borderRadius: "8px",
+//     backgroundColor: "#f9f9f9",
+//     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+//   },
+//   heading: {
+//     textAlign: "center",
+//     marginBottom: "20px",
+//     fontSize: "24px",
+//     fontWeight: "bold",
+//     color: "#333",
+//   },
+//   form: {
+//     display: "flex",
+//     flexDirection: "column",
+//     gap: "15px",
+//   },
+//   input: {
+//     padding: "12px",
+//     fontSize: "16px",
+//     border: "1px solid #ccc",
+//     borderRadius: "6px",
+//     transition: "border-color 0.3s ease",
+//   },
+//   fileInput: {
+//     padding: "8px",
+//     fontSize: "16px",
+//     border: "1px solid #ccc",
+//     borderRadius: "6px",
+//     backgroundColor: "#fff",
+//   },
+//   textarea: {
+//     padding: "12px",
+//     fontSize: "16px",
+//     border: "1px solid #ccc",
+//     borderRadius: "6px",
+//     resize: "vertical",
+//     minHeight: "120px",
+//   },
+//   button: {
+//     padding: "12px 16px",
+//     fontSize: "18px",
+//     color: "#fff",
+//     backgroundColor: "#007BFF",
+//     border: "none",
+//     borderRadius: "6px",
+//     cursor: "pointer",
+//     transition: "background-color 0.3s ease",
+//   },
+// };
+
+// export default ContactInner;
+
+
 import React, { useState } from "react";
 
 const ContactInner = () => {
   const [post, setPost] = useState({
     name: "",
     role: "",
-    profilePicture: "",
     title: "",
     description: "",
     time: "",
   });
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name) {
-      setPost((prev) => ({ ...prev, [name]: value }));
-    } else {
-      console.error("Name attribute is missing in the input field:", e.target);
+    setPost((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicture(file);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentTime = new Date().toLocaleString(); // Auto-generate time
-    const newPost = { ...post, time: currentTime };
+    const formData = new FormData();
+
+    formData.append("name", post.name);
+    formData.append("role", post.role);
+    formData.append("title", post.title);
+    formData.append("description", post.description);
+    if (profilePicture) {
+      formData.append("postImage", profilePicture);
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPost),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -425,15 +612,14 @@ const ContactInner = () => {
       const data = await response.json();
       console.log("Post saved to backend:", data);
 
-      // Clear the form after successful submission
       setPost({
         name: "",
         role: "",
-        profilePicture: "",
         title: "",
         description: "",
         time: "",
       });
+      setProfilePicture(null);
     } catch (error) {
       console.error("Error saving post:", error);
       alert("Failed to save post. Please try again.");
@@ -441,8 +627,9 @@ const ContactInner = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="add-post-form" style={styles.form}>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>Create a Post</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <input
           type="text"
           name="name"
@@ -464,13 +651,8 @@ const ContactInner = () => {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              setPost((prev) => ({ ...prev, profilePicture: URL.createObjectURL(file) }));
-            }
-          }}
-          style={styles.input}
+          onChange={handleFileChange}
+          style={styles.fileInput}
         />
         <input
           type="text"
@@ -497,42 +679,32 @@ const ContactInner = () => {
   );
 };
 
-// Inline styles
 const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+  },
+  heading: {
+    fontSize: "24px",
+    fontWeight: "bold",
+    margin: "10px 0",
+  },
   form: {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
+    width: "100%",
     maxWidth: "400px",
-    margin: "0 auto",
-    padding: "20px",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    backgroundColor: "#f9f9f9",
   },
   input: {
     padding: "10px",
-    fontSize: "16px",
     border: "1px solid #ccc",
     borderRadius: "4px",
-  },
-  textarea: {
-    padding: "10px",
     fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    resize: "vertical",
-    minHeight: "100px",
-  },
-  button: {
-    padding: "10px 15px",
-    fontSize: "16px",
-    color: "#fff",
-    backgroundColor: "#007BFF",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
   },
 };
+
 
 export default ContactInner;
